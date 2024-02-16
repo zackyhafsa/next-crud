@@ -1,3 +1,5 @@
+import AddUser from "./addUser";
+
 interface Users {
   id: number;
   name: string;
@@ -12,6 +14,7 @@ export default async function Home() {
     <div className="px-[20%] py-5">
       <h1 className="font-bold text-3xl text-slate-800">NextJs Crud</h1>
       <div className="overflow-x-auto">
+        <AddUser />
         <table className="table">
           <thead>
             <tr>
@@ -19,6 +22,7 @@ export default async function Home() {
               <th>Name</th>
               <th>Username</th>
               <th>Email</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -29,6 +33,10 @@ export default async function Home() {
                   <td>{user.name}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
+                  <td className="flex gap-2">
+                    <button className="btn btn-error btn-sm text-white">Hapus</button>
+                    <button className="btn btn-warning btn-sm text-white">Edit</button>
+                  </td>
                 </tr>
               );
             })}
