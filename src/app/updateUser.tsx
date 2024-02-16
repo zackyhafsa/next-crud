@@ -3,10 +3,17 @@
 import { useRouter } from "next/navigation";
 import { SyntheticEvent, useState } from "react";
 
-export default function AddUser() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+interface Users {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+}
+
+export default function UpdateUser(user: Users) {
+  const [name, setName] = useState(user.name);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -16,11 +23,9 @@ export default function AddUser() {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    setIsMutating(true);
-    await fetch("http://localhost:5000/users", {
-      method: "POST",
+  const handleUpdate = async (e: SyntheticEvent) => {
+    await fetch(`http://localhost:5000/users/${user.id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -30,24 +35,21 @@ export default function AddUser() {
         email,
       }),
     });
-    setIsMutating(false);
-    setName("");
-    setUsername("");
-    setEmail("");
     setModal(false);
     router.refresh();
+    console.log(user);
   };
 
   return (
     <div>
-      <button className="btn btn-neutral text-white mt-3" onClick={handleChange}>
-        Tambah
+      <button className="btn btn-warning btn-sm text-white" onClick={handleChange}>
+        Edit
       </button>
       <input type="checkbox" className="modal-toggle" checked={modal} onChange={handleChange} />
       <div className="modal">
         <div className="modal-box">
-          <h1 className="font-bold text-2xl text-slate-800 my-2">Tambah User</h1>
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+          <h1 className="font-bold text-2xl text-slate-800 my-2">Edit {user.id}</h1>
+          <form className="flex flex-col gap-2" onSubmit={handleUpdate}>
             <label className="input input-bordered flex items-center gap-2">
               Name
               <input
@@ -84,9 +86,9 @@ export default function AddUser() {
               <button
                 className="btn btn-success text-white mt-3"
                 type="submit"
-                onClick={handleSubmit}
+                onClick={handleUpdate}
               >
-                Tambah
+                Edit
               </button>
             ) : (
               <button className="btn loading" type="button">

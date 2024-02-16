@@ -1,4 +1,6 @@
 import AddUser from "./addUser";
+import DeleteUser from "./deleteUser";
+import UpdateUser from "./updateUser";
 
 interface Users {
   id: number;
@@ -8,7 +10,7 @@ interface Users {
 }
 
 export default async function Home() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const res = await fetch("http://localhost:5000/users", { cache: "no-store" });
   const users: Users[] = await res.json();
   return (
     <div className="px-[20%] py-5">
@@ -34,8 +36,8 @@ export default async function Home() {
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td className="flex gap-2">
-                    <button className="btn btn-error btn-sm text-white">Hapus</button>
-                    <button className="btn btn-warning btn-sm text-white">Edit</button>
+                    <DeleteUser {...user} />
+                    <UpdateUser {...user} />
                   </td>
                 </tr>
               );
