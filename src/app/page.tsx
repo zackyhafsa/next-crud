@@ -10,7 +10,7 @@ interface Users {
 }
 
 export default async function Home() {
-  const res = await fetch("http://localhost:5000/users", { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}`, { cache: "no-store" });
   const users: Users[] = await res.json();
   return (
     <div className="px-[20%] py-5">

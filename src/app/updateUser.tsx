@@ -24,7 +24,7 @@ export default function UpdateUser(user: Users) {
   const router = useRouter();
 
   const handleUpdate = async (e: SyntheticEvent) => {
-    await fetch(`http://localhost:5000/users/${user.id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${user.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,6 @@ export default function UpdateUser(user: Users) {
     });
     setModal(false);
     router.refresh();
-    console.log(user);
   };
 
   return (

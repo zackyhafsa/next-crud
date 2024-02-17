@@ -22,7 +22,7 @@ export default function DeleteUser(user: Users) {
 
   const handleDelete = async (userId: number) => {
     setIsMutating(true);
-    await fetch(`http://localhost:5000/users/${userId}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${userId}`, {
       method: "DELETE",
     });
     setIsMutating(false);

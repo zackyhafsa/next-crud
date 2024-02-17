@@ -19,7 +19,7 @@ export default function AddUser() {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     setIsMutating(true);
-    await fetch("http://localhost:5000/users", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
