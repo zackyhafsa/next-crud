@@ -24,6 +24,7 @@ export default function UpdateUser(user: Users) {
   const router = useRouter();
 
   const handleUpdate = async (e: SyntheticEvent) => {
+    setIsMutating(true);
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${user.id}`, {
       method: "PATCH",
       headers: {
@@ -35,6 +36,7 @@ export default function UpdateUser(user: Users) {
         email,
       }),
     });
+    setIsMutating(false);
     setModal(false);
     router.refresh();
   };
@@ -47,7 +49,7 @@ export default function UpdateUser(user: Users) {
       <input type="checkbox" className="modal-toggle" checked={modal} onChange={handleChange} />
       <div className="modal">
         <div className="modal-box">
-          <h1 className="font-bold text-2xl text-slate-800 my-2">Edit {user.id}</h1>
+          <h1 className="font-bold text-2xl text-slate-800 my-2">Edit user</h1>
           <form className="flex flex-col gap-2" onSubmit={handleUpdate}>
             <label className="input input-bordered flex items-center gap-2">
               Name
